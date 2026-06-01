@@ -1,0 +1,31 @@
+name: statehub
+description: >-
+  Zero-boilerplate reactive state for Dart & Flutter. Context-free,
+  offline-first with 5 cache strategies, sealed async types, and
+  built-in dependency injection. No external dependencies for core.
+version: 0.1.0
+homepage: https://github.com/KULLANICI_ADIN/statehub
+repository: https://github.com/KULLANICI_ADIN/statehub
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  test: ^1.25.0
+  lints: ^4.0.0
+  shared_preferences: ^2.3.0
+  hive: ^2.2.3
+
+topics:
+  - state-management
+  - reactive
+  - offline-first
+  - async
+  - flutter
