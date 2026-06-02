@@ -46,33 +46,21 @@ class Hub<T> {
   String toString() => 'Hub<$T>($_value)';
 }
 
-class ComputedHub<R, S> {
-  R _value;
-  final List<void Function(R)> _listeners = [];
-  late final Disposable _subscription;
+/// ComputedHub extends Hub<R> so it can be used anywhere Hub<R> is expected.
+class ComputedHub<R, S> extends Hub<R> {
+  late final Disposable _sourceSubscription;
 
-  ComputedHub(R initialValue, R Function(S) selector, Hub<S> source)
-      : _value = initialValue {
-    _subscription = source.listen((_, next) {
-      final computed = selector(next);
-      if (computed == _value) return;
-      _value = computed;
-      for (final l in List.of(_listeners)) {
-        l(_value);
-      }
+  ComputedHub(super.initialValue, R Function(S) selector, Hub<S> source)
+      {
+    _sourceSubscription = source.listen((_, next) {
+      set(selector(next));
     });
   }
 
-  R get value => _value;
-
-  Disposable listen(void Function(R value) listener) {
-    _listeners.add(listener);
-    return Disposable(() => _listeners.remove(listener));
-  }
-
+  @override
   void dispose() {
-    _subscription.dispose();
-    _listeners.clear();
+    _sourceSubscription.dispose();
+    super.dispose();
   }
 }
 
